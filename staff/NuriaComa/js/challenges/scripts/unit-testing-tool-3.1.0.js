@@ -49,7 +49,7 @@
  * 
  * @author manuelbarzi
  * 
- * @version 3.1.0
+ * @version 3.1.1
  */
 function test(testCase, description, check) {
     try {
@@ -58,7 +58,7 @@ function test(testCase, description, check) {
         check(res) ? console.log('%c TEST -> ' + description + ' -> TRUE -> ', 'background: green; color: white; display: block;', res) :
             console.log('%c TEST -> ' + description + ' -> FALSE -> ', 'background: yellow; color: black; display: block;', res);
     } catch (err) {
-        console.log('%c TEST -> ' + description + ' -> ERROR -> ', 'background: red; color: white; display: block;', res);
+        console.log('%c TEST -> ' + description + ' -> ERROR -> ', 'background: red; color: white; display: block;', err);
     }
 }
 

@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(231, 231, 231);
+}
+.row {
+    margin-bottom: 20px;
+}
+
+.text-info{
+    margin-top: 5%;
+}
+.list-group-item{
+    font-size: 20px;
+
+}
+.btn-outline-info {
+   
+    color:#17a2b8;
+}
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+h3 {
+    margin-top: 15px;
+}
+

@@ -20,6 +20,7 @@ function toRandomCase(str, func){
              }   
         }
         return input
+        
 
     }else {
         if (typeof func !== "function")
