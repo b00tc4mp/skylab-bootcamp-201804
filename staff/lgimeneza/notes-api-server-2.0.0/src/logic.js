@@ -51,16 +51,18 @@ const logic = {
      * 
      * @throws
      */
-    retrieveNote(userdId, id) {
-        // TODO check userId in note
+    retrieveNote(userId, id) {
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim())) throw Error('userId is empty or blank')
 
         if (typeof id !== 'string') throw Error('id is not a string')
 
         if (!(id = id.trim())) throw Error('id is empty or blank')
 
-        const index = this._notes.findIndex(note => note.id === id)
+        const index = this._notes.findIndex(note => note.id === id && note.userId === userId)
 
-        if (index < 0) throw Error(`note with id ${id} does not exist`)
+        if (index < 0) throw Error(`note with id ${id} and user ${userId} does not exist`)
 
         return this._notes[index]
     },
@@ -69,8 +71,11 @@ const logic = {
      * @param {string} userId
      */
     listNotes(userId) {
-        // TODO filter by user id
-        return this._notes
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim())) throw Error('userId is empty or blank')
+
+        return this._notes.filter(note => note.userId === userId)
     },
 
     /**
@@ -81,8 +86,12 @@ const logic = {
      * @throws
      */
     removeNote(userId, id) {
-        // TODO check user id
-        
+        // check user id
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim())) throw Error('userId is empty or blank')
+
+        // check note id
         if (typeof id !== 'string') throw Error('id is not a string')
 
         if (!(id = id.trim())) throw Error('id is empty or blank')
@@ -104,6 +113,9 @@ const logic = {
      */
     updateNote(userId, id, text) {
         // TODO check user id
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!(userId = userId.trim())) throw Error('userId is empty or blank')
 
         if (typeof id !== 'string') throw Error('id is not a string')
 
@@ -129,6 +141,10 @@ const logic = {
      */
     findNotes(userId, text) {
         // TODO filter by user id too
+
+        if (typeof userId !== 'string') throw Error('userId is not a string')
+
+        if (!userId.length) throw Error('userId is empty')
 
         if (typeof text !== 'string') throw Error('text is not a string')
 

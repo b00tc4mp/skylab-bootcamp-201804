@@ -1,3 +1,4 @@
+
 'use strict'
 
 const express = require('express')
@@ -12,18 +13,14 @@ app.use(bodyParser.json()) // middleware
 let notes = []
 
 app.post('/api/notes', (req, res) => {
-    const { body: { text } } = req
+    const { body: { userId, text } } = req
 
     try {
-        const id = logic.addNote(text)
+        const id = logic.addNote(userId, text)
+        res.status(201).json({ status: 'OK', data: { id } })
 
-        res.status(201)
-
-        res.json({ status: 'OK', data: { id } })
     } catch ({ message }) {
-        res.status(400)
-
-        res.json({ status: 'KO', error: message })
+        res.status(400).json({ status: 'KO', error: message })
     }
 })
 
@@ -35,26 +32,26 @@ app.get('/api/notes/:id', (req, res) => {
 
         res.json({ status: 'OK', data: note })
     } catch ({ message }) {
-        res.status(400)
-
-        res.json({ status: 'KO', error: message })
+        res.status(400).json({ status: 'KO', error: message })
     }
 })
 
 app.get('/api/notes', (req, res) => {
-    const { query: { q } } = req
+    const { query: { userId, q } } = req
 
     if (q) {
         try {
-            res.json({ status: 'OK', data: logic.findNotes(q) })
+            res.json({ status: 'OK', data: logic.findNotes(userId, q) })
         } catch ({ message }) {
-            res.status(400)
-
-            res.json({ status: 'KO', error: message })
+            res.status(400).json({ status: 'KO', error: message })
         }
-    } else
-        res.json({ status: 'OK', data: logic.listNotes() })
-})
+    } else{
+        try {
+            res.json({ status: 'OK', data: logic.listNotes(userId) })
+        } catch (error) {
+            res.status(400).json({ status: 'KO', error: message })
+        }
+    }})
 
 app.delete('/api/notes/:id', (req, res) => {
     const { params: { id } } = req
@@ -64,9 +61,7 @@ app.delete('/api/notes/:id', (req, res) => {
 
         res.json({ status: 'OK' })
     } catch ({ message }) {
-        res.status(400)
-
-        res.json({ status: 'KO', error: message })
+        res.status(400).json({ status: 'KO', error: message })
     }
 })
 
@@ -78,9 +73,7 @@ app.put('/api/notes/:id', (req, res) => {
 
         res.json({ status: 'OK' })
     } catch ({ message }) {
-        res.status(400)
-
-        res.json({ status: 'KO', error: message })
+        res.status(400).json({ status: 'KO', error: message })
     }
 })
 
